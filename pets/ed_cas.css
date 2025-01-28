@@ -1,0 +1,243 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+}
+
+.container {
+    background-color: #ADD8E6;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#logo {
+    height: 80px;
+    margin-right: auto;
+    display: block;
+}
+
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 35rem;
+    flex-wrap: wrap;
+}
+
+.menu ul {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu ul a {
+    text-decoration: none;
+    color: black;
+}
+
+.menu ul li {
+    list-style: none;
+}
+
+/* Formulário responsivo */
+/* .contt {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 20px auto;
+} */
+#cadastroForm {
+    display: block;
+    gap: 10px;
+}
+
+fieldset {
+    border: 1px solid rgb(0, 0, 0);
+    padding: 2%;
+    margin: 50px;
+    display: flex;
+  
+}
+
+
+label {
+    font-weight: bold;
+    color: #555;
+}
+
+.sec1 {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 25px 30%;
+    gap: 30px;
+}
+
+
+#nome {
+    padding: px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-left: -25px;
+
+}
+
+#especie {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-left: -25px;
+}
+
+#raca {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 80px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-left: -25px;
+}
+
+#idade{
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 120px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-left: -25px;
+}
+
+#clienteid {
+
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 120px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-left: -25px;
+}
+
+#nomecliente{
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 120px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-left: -25px;
+}
+
+#cpfcliente {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-left: -25px;
+}
+#leg{
+    text-align: center;
+    margin-left: 25%;
+}
+/* #bairro {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-left: -25px;
+}
+
+#cep {
+    display: block;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-left: -25px;
+}
+
+#cpf{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 160px;
+    box-sizing: border-box;
+    margin-top: 5px; 
+    margin-left: -25px;
+} */
+
+#button{
+   width: 20%; 
+   border: none;
+   border-radius: 30px;
+   cursor: pointer;
+   background-color:#ADD8E6;
+   margin-top: 7%;
+   margin-bottom:-3%;
+}
+
+#button:hover {
+    background-color: #53c5eb;
+    color: black;
+} 
+
+
+@media (max-width: 768px) {
+
+    /* Ajuste no layout de formulário */
+    #cadastroForm {
+        flex-direction: column;
+    }
+
+    /* Reduzindo o espaçamento dos itens de navegação */
+    nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .contt {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* Reduzindo ainda mais o tamanho do logo e ajustando margens */
+    #logo {
+        height: 60px;
+        margin-right: 0;
+    }
+
+    /* Ajuste dos itens de navegação para telas muito pequenas */
+    nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .contt {
+        padding: 15px;
+    }
+}

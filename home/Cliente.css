@@ -1,0 +1,154 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+}
+
+.container {
+    background-color: #b0e2eb;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+    gap: 30rem;
+}
+
+.editar-cont{
+    display: none;
+}
+#logo {
+    height: 100px;
+    margin-right: 180px;
+}
+
+.menu ul {
+    display: flex;
+    gap: 35px;
+    margin-right: 10px;
+    margin-top: 9%;
+}
+
+.menu ul a {
+    text-decoration: none;
+    color: black;
+}
+
+.menu ul li {
+    margin-top: 10px;
+    list-style: none;
+    cursor: pointer;
+}
+.menu ul li:hover{
+    color: #5a5454;
+}
+
+#cadas{
+    display: flex;
+    justify-content: center;
+    margin:10px 0 0 10px;
+    align-items: center;
+    padding: 5px;
+    width: 10%;
+    background-color: #b0e2eb;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 1s ease-in-out;
+}
+#cadas:hover{
+    transform: scale(1.1);
+    background: transparent;
+    border: 1px solid #b0e2eb;
+}
+.buscar {
+    display: flex;
+    gap: 10px;
+}
+
+#btn-buscar {
+    width: 45px;
+    height: 30px;
+    background-color: #b0e2eb;
+    border: 1px solid #b0e2eb;
+    border-radius: 0 10px 10px 0;
+    margin-left: -10px;
+    margin-top: 10px;
+
+}
+
+#lupa {
+    width: 30px;
+}
+
+#buscar {
+    border: 1px solid #b0e2eb;
+    border-radius: 10px 0 0 10px;
+    margin-top: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #b0e2eb;
+    color:black;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+tr:nth-child(even) td {
+    background-color: #f2f2f2;
+}
+
+.botaotabela {
+    display: inline-flex; /* Garante que os botões fiquem lado a lado */
+    justify-content: center;
+    align-items: center;
+    padding: 1px; /* Reduz o padding dentro do botão */
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 1s ease-in-out;
+}
+.botaotabela img {
+    width: 15%; /* A imagem irá ocupar 100% da largura do botão */
+    height: 215%; /* A imagem irá ocupar 100% da altura do botão */
+    object-fit: contain; /* Mantém a proporção da imagem */
+}
+
+.botaotabela:hover {
+    transform: scale(1.1);
+    background: transparent;
+}
+
+
+footer {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    padding: 5px;
+    max-width: 100%;
+    background-color: #F5F5DC;
+    text-align: center;
+}

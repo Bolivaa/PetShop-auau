@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Serviço</title>
+    <link rel="stylesheet" href="servico.css">
+
+</head>
+
+<body>
+    <header class="container">
+        <nav>
+            <img id="logo" src="../src/img/petauau.png" alt="logo">
+            <div class="menu">
+                <ul>
+                    <a href="../home/home.html">
+                        <li>Inicio</li>
+                    </a>
+                    <a href="../home/servico.html">
+                        <li>Voltar</li>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="contt">
+        <fieldset>
+            <legend>Editar Serviço</legend>
+            <form id="editarForm" onsubmit="atualizarServico(event)">
+                <div class="sec1">
+                    <label for="descricao" >Descrição:</label>
+                    <input type="text" id="descricao" name="descricao" required>
+
+                    <label for="preco">Preço:</label>
+                    <input type="number" id="preco" name="preco"required>
+                </div>
+                
+                <button id="button" type="submit">Atualizar</button>
+            </form>
+        </fieldset>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const servicoId = urlParams.get('id');
+            if (servicoId) {
+                editarServico(servicoId);
+            }
+        });
+       
+
+        async function editarServico(ServicoID) {
+            try {
+                const response = await fetch(`http://localhost:3000/servicos/${ServicoID}`);
+                if (!response.ok) {
+                    throw new Error(`Erro ${response.status}: ${response.statusText}`);
+                }
+                const servico = await response.json();
+                console.log(servico);
+                    
+                    // Preenche o formulário com os dados do cliente para edição
+                    document.getElementById('descricao').value = servico.Descricao || '';
+                    document.getElementById('preco').value = servico.Preco || '';
+                    
+                    // Salva o ID do cliente para uso posterior na atualização
+                    editarForm.dataset.servicoId = ServicoID;
+                    editarForm.style.display = 'block'; // Mostra o formulário
+                    
+            } catch (error) {
+                console.error('Erro ao buscar dados do servico para edição:', error);
+            }
+                    
+        }
+
+
+        // Função para enviar os dados atualizados do cliente 
+        async function atualizarServico(event) {
+            event.preventDefault();
+
+            const ServicoID = document.getElementById('editarForm').dataset.servicoId;
+
+            const servicoAtualizado = {
+                Descricao: document.getElementById('descricao').value,
+                Preco: document.getElementById('preco').value,
+
+            };
+
+            try {
+                const response = await fetch(`http://localhost:3000/servicos/${ServicoID}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(servicoAtualizado)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro ${response.status}: ${response.statusText}`);
+                }
+
+                alert('Servico atualizado com sucesso!');
+            } catch (error) {
+                console.error('Erro ao atualizar servico:', error);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

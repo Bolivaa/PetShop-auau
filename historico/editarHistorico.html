@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Historico</title>
+    <link rel="stylesheet" href="historico.css">
+
+</head>
+
+<body>
+    <header class="container">
+        <nav>
+            <img id="logo" src="../src/img/petauau.png" alt="logo">
+            <div class="menu">
+                <ul>
+                    <a href="../home/home.html">
+                        <li>Inicio</li>
+                    </a>
+                    <a href="../home/pet.html">
+                        <li>Voltar</li>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="contt">
+        <fieldset>
+            <legend>Editar Historico</legend>
+            <form id="editarForm" onsubmit="atualizarHistorico(event)">
+                <div class="sec1">
+                    <label for="petid" >PetID:</label>
+                    <input type="number" id="petid" name="petid" required>
+
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome"required>
+                </div>
+                <div class="sec2">
+                    <label for="historico">Historico:</label>
+                    <textarea name="historico" id="historico" required></textarea>
+                </div>
+                <button id="button" type="submit">Atualizar</button>  
+                </div>
+                
+            </form>
+           
+        </fieldset>
+    </div>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const historicoid = urlParams.get('id');
+            console.log('id: ',historicoid)
+            if (historicoid) {
+                editarHistorico(historicoid);
+            }
+        });
+       
+
+        async function editarHistorico(PetID) {
+            try {
+                const response = await fetch(`http://localhost:3000/historico/${PetID}`);
+                console.log(response);
+                if (!response.ok) {
+                    throw new Error(`Erro ${response.status}: ${response.statusText}`);
+                }
+                const historico = await response.json();
+                console.log(historico);
+                    
+                    // Preenche o formulário com os dados do cliente para edição
+                    document.getElementById('petid').value = historico.PetID || '';
+                    document.getElementById('nome').value = historico.Nome || '';
+                    document.getElementById('historico').value = historico.Historico || '';
+                    
+                    // Salva o ID do cliente para uso posterior na atualização
+                    editarForm.dataset.historicoId = PetID;
+                    editarForm.style.display = 'block'; // Mostra o formulário
+                    
+            } catch (error) {
+                console.error('Erro ao buscar historico para edição:', error);
+            }
+                    
+        }
+
+
+        // Função para enviar os dados atualizados do cliente 
+        async function atualizarHistorico(event) {
+            event.preventDefault();
+
+            const HistoricoID = document.getElementById("editarForm").dataset.historicoId;
+
+            const historicoAtualizado = {
+                PetID: document.getElementById('petid').value,
+                Nome: document.getElementById('nome').value,
+                Historico: document.getElementById('historico').value,
+
+            };
+
+            try {
+                const response = await fetch(`http://localhost:3000/historico/${HistoricoID}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(historicoAtualizado)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro ${response.status}: ${response.statusText}`);
+                }
+
+                alert('Historico atualizado com sucesso!');
+            } catch (error) {
+                console.error('Erro ao atualizar historico:', error);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

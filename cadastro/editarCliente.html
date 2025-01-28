@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Cliente</title>
+   <link rel="stylesheet" href="cadastro.css">
+   <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+    <header class="container">
+        <nav>
+            <a href="../home/home.html"><img id="logo" src="../src/img/petauau.png" alt="logo_pet"></a>
+            <div class="menu">
+                <ul>
+                    <a href="../home/home.html">
+                        <li>Inicio</li>
+                    </a>
+                    <a href="../home/Cliente.html">
+                        <li>Voltar</li>
+                    </a>
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="contt">
+        <fieldset>
+            <legend>Editar Clientes</legend>
+            <form id="editarForm" onsubmit="atualizarCliente(event)">
+                <div class="sec1">
+                    <label for="nome" >Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+
+                    <label for="telefone">Telefone:</label>
+                    <input type="tel" id="telefone" name="telefone" placeholder="(81)9999-9999" required>
+                   
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="cpf">CPF:</label>
+                    <input type="text" id="cpf" name="cpf" required>
+                </div>
+                <div class="sec1">
+                    <label for="cep">Cep:</label>
+                    <input type="text" id="cep" name="cep" required>
+
+                   
+                    <label for="cidade">Cidade:</label>
+                    <input type="text" id="cidade" name="cidade" required>
+
+                    <label for="estado">Estado:</label>
+                    <select name="estado" id="estado">
+                          <option value=""></option>
+                          <option value="AC">Acre (AC)</option>
+                          <option value="AP">Amapá (AP)</option>
+                          <option value="AM">Amazonas (AM)</option>
+                          <option value="PA">Pará (PA)</option>
+                          <option value="RO">Rondônia (RO)</option>
+                          <option value="RR">Roraima (RR)</option>
+                          <option value="TO">Tocantins (TO)</option>
+                          <option value="AL">Alagoas (AL)</option>
+                          <option value="BA">Bahia (BA)</option>
+                          <option value="CE">Ceará (CE)</option>
+                          <option value="MA">Maranhão (MA)</option>
+                          <option value="PB">Paraíba (PB)</option>
+                          <option value="PE">Pernambuco (PE)</option>
+                          <option value="PI">Piauí (PI)</option>
+                          <option value="RN">Rio Grande do Norte (RN)</option>
+                          <option value="SE">Sergipe (SE)</option>
+                          <option value="DF">Distrito Federal (DF)</option>
+                          <option value="GO">Goiás (GO)</option>
+                          <option value="MT">Mato Grosso (MT)</option>
+                          <option value="MS">Mato Grosso do Sul (MS)</option>
+                          <option value="ES">Espírito Santo (ES)</option>
+                          <option value="MG">Minas Gerais (MG)</option>
+                          <option value="RJ">Rio de Janeiro (RJ)</option>
+                          <option value="SP">São Paulo (SP)</option>
+                          <option value="PR">Paraná (PR)</option>
+                          <option value="RS">Rio Grande do Sul (RS)</option>
+                          <option value="SC">Santa Catarina (SC)</option> 
+                      </select>
+                </div>
+                <div class="sec1">
+
+                    <label for="bairro">Bairro:</label>
+                    <input type="text" id="bairro" name="bairro" required>
+                   
+                    <label for="rua">Rua:</label>
+                    <input type="text" id="rua" name="rua" required>
+                   
+                    <label for="numero">Numero:</label>
+                    <input type="text" id="numero" name="numero" required>           
+
+                </div>
+                <button id="button" type="submit">Atualizar</button>
+            </form>
+        </fieldset>
+    </div>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const clienteId = urlParams.get('id');
+            if (clienteId) {
+                editarCliente(clienteId);
+            }
+        });
+       
+
+        async function editarCliente(ClienteID) {
+            try {
+                const response = await fetch(`http://localhost:3000/clientes/${ClienteID}`);
+                if (!response.ok) {
+                    throw new Error(`Erro ${response.status}: ${response.statusText}`);
+                }
+                const cliente = await response.json();
+                console.log(cliente);
+                    
+                    // Preenche o formulário com os dados do cliente para edição
+                    document.getElementById('nome').value = cliente.Nome || '';
+                    document.getElementById('telefone').value = cliente.Telefone || '';
+                    document.getElementById('email').value = cliente.Email || '';
+                    document.getElementById('cpf').value = cliente.CPF || '';
+                    document.getElementById('cep').value = cliente.CEP || '';
+                    document.getElementById('cidade').value = cliente.Cidade || '';
+                    document.getElementById('estado').value = cliente.Estado || '';
+                    document.getElementById('bairro').value = cliente.Bairro || '';
+                    document.getElementById('rua').value = cliente.Rua || '';
+                    document.getElementById('numero').value = cliente.Numero || '';
+                    
+                    // Salva o ID do cliente para uso posterior na atualização
+                    editarForm.dataset.clienteId = ClienteID;
+                    editarForm.style.display = 'block'; // Mostra o formulário
+                    
+            } catch (error) {
+                console.error('Erro ao buscar dados do cliente para edição:', error);
+            }
+                    
+        }
+
+        async function atualizarCliente(event) {
+            event.preventDefault();
+
+            const ClienteID = document.getElementById('editarForm').dataset.clienteId;
+
+            const clienteAtualizado = {
+                Nome: document.getElementById('nome').value,
+                Telefone: document.getElementById('telefone').value,
+                Email: document.getElementById('email').value,
+                CPF: document.getElementById('cpf').value,
+                CEP: document.getElementById('cep').value,
+                Cidade: document.getElementById('cidade').value,
+                Estado: document.getElementById('estado').value,
+                Bairro: document.getElementById('bairro').value,
+                Rua: document.getElementById('rua').value,
+                Numero: document.getElementById('numero').value,
+            };
+
+            try {
+                const response = await fetch(`http://localhost:3000/clientes/${ClienteID}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(clienteAtualizado)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro ${response.status}: ${response.statusText}`);
+                }
+
+                alert('Cliente atualizado com sucesso!');
+            } catch (error) {
+                console.error('Erro ao atualizar cliente:', error);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

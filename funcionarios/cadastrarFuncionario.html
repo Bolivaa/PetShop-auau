@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CadastroAUAU</title>
+   <link rel="stylesheet" href="funcionario.css">
+</head>
+
+<body>
+    <header class="container">
+        <nav>
+            <img id="logo" src="../src/img/petauau.png" alt="logo">
+            <div class="menu">
+                <ul>
+                    <a href="../home/home.html">
+                        <li>Inicio</li>
+                    </a>
+                    <a href="../home/funcionario.html">
+                        <li>Voltar</li>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="contt">
+        <fieldset>
+            <legend>Cadastro de Funcionarios</legend>
+            <form id="cadastroForm" onsubmit="cadastrar(event)">
+                <div>
+                    <section class="sec1">
+                        <label for="nome">Nome:</label>
+                        <input type="text" id="nome" name="nome" required>
+
+                        <label for="cpf">CPF:</label>
+                        <input type="text" id="cpf" name="cpf" required>
+
+                        <label for="telefone">Telefone:</label>
+                        <input type="tel" id="telefone" name="telefone" placeholder="(81)9999-9999" required>
+                    </section>
+                    
+                    <section class="sec1">
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" name="email" required>
+
+                        <label for="cargo">Cargo:</label>
+                        <input type="text" id="cargo" name="cargo" required>
+
+                        <label for="datacontratacao">Admissão:</label>
+                        <input type="text" id="datacontratacao" name="datacontratacao" required>
+                </section>
+                </div>
+
+                <button id="button" type="submit">Cadastrar</button>
+            </form>
+        </fieldset>
+    </div>
+
+    <script>
+        function cadastrar(event) {
+            event.preventDefault(); // Evita o refresh da página
+
+            // Pega os valores do formulário
+            const form = document.getElementById('cadastroForm');
+            const formData = new FormData(form);
+
+            // Converte os dados para um objeto
+            const data = Object.fromEntries(formData.entries());
+
+            // Faz a requisição POST para a API
+            fetch('http://localhost:3000/funcionarios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Erro no cadastro');
+                }
+            })
+            .then(data => {
+                alert('Cadastro realizado com sucesso!');
+                location.reload();
+                console.log('Sucesso:', data);
+            })
+            .catch(error => {
+                alert('Erro ao cadastrar!');
+                console.error('Erro:', error);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

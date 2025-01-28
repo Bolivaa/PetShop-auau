@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>funcionario</title>
+    <link rel="stylesheet" href="Cliente.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+</head>
+<body>
+        <header class="container">
+            <nav>
+                <a href="../home/home.html"><img id="logo" src="../src/img/petauau.png" alt="logo_pet"></a>
+                <div class="menu">
+                    <ul>
+                        <a href="home.html">
+                            <li>Inicio</li>
+                        </a>
+                        <a href="Cliente.html" id="clientes">
+                            <li>Clientes</li>
+                        </a>
+                        <a href="../home/servico.html">
+                            <li>Serviços</li>
+                        </a>
+                        <a href="pet.html" id="pets">
+                            <li>Pets</li>
+                        </a>
+                       
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        
+     <div class="conteiner">
+        <button id="cadas">Cadastrar</button>
+        <div class="tabela">
+            <table style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                        <th id="id">ID</th>
+                        <th >Nome</th>
+                        <th >CPF</th>
+                        <th>Telefone</th>
+                        <th>Cargo</th>
+                        <th>Opções</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+           
+        </div>
+    </div>
+    
+    <footer>
+        <div>
+            <p>&copy; 2024 PetShopAuAU.</p>
+        </div>
+    </footer>
+
+    <script>
+
+        // Função para buscar dados dos clientes e preencher na tabela
+        document.addEventListener('DOMContentLoaded', async function() {
+            const edt = document.querySelector('.editar-cont')
+            try {
+                const response = await fetch('http://localhost:3000/funcionarios');
+                const resultado = await response.json();
+    
+                const tabelaBody = document.querySelector('.tabela tbody');
+                tabelaBody.innerHTML = '';
+    
+                resultado.forEach(funcionario => {
+                    const novaLinha = tabelaBody.insertRow();
+                    novaLinha.insertCell(0).textContent = funcionario.FuncionarioID;
+                    novaLinha.insertCell(1).textContent = funcionario.Nome;
+                    novaLinha.insertCell(2).textContent = funcionario.CPF;
+                    novaLinha.insertCell(3).textContent = funcionario.Telefone;
+                    novaLinha.insertCell(4).textContent = funcionario.Cargo;
+                    
+                    const opcoesCell = novaLinha.insertCell(5); // Célula única para todos os botões
+                    
+                    // Garantir que a célula de opções tenha o estilo flex
+                    
+                    // opcoesCell.style.display = 'flex'; // Faz os botões ficarem lado a lado
+                    // opcoesCell.style.gap = '4px'; // Espaço entre os botões
+
+                    // Criando o botão Editar
+                    const editarButton = document.createElement('button');
+                    editarButton.classList.add("botaotabela");
+                    editarButton.innerHTML = '<img src="../src/img/edit.png" alt="Editar">'; // Usando uma imagem
+                    opcoesCell.appendChild(editarButton);
+                    editarButton.onclick = () => {
+                        window.location.href = `../funcionarios/editarFuncionario.html?id=${funcionario.FuncionarioID}`;
+                    };
+
+                    // Criando o botão Deletar
+                    const deletarButton = document.createElement('button');
+                    deletarButton.classList.add("botaotabela");
+                    deletarButton.innerHTML = '<img src="../src/img/delete2.png" alt="Deletar">'; // Usando uma imagem
+                    opcoesCell.appendChild(deletarButton);
+                    deletarButton.onclick = () => {
+                        const confirmacao = confirm('Você tem certeza que deseja deletar este Funcionario?');
+                        if (confirmacao) {
+                            fetch(`http://localhost:3000/funcionarios/${funcionario.FuncionarioID}`, {
+                                method: 'DELETE'
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    alert('Funcionario deletado com sucesso!');
+                                    location.reload();
+                                } else {
+                                    alert('Erro ao deletar funcionario.');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Erro:', error);
+                                alert('Erro ao deletar funcionario.');
+                            });
+                        }
+                    };
+    
+               
+                });
+
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+            }
+        });
+      
+
+        const cad = document.getElementById("cadas").addEventListener('click',function mudar() {
+        window.location.href = "../funcionarios/cadastrarFuncionario.html";
+        } );
+
+    </script>
+
+   
+    
+    
+</body>
+</html>

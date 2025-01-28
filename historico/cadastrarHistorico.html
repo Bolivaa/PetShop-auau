@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CadastroAUAU</title>
+    <link rel="stylesheet" href="historico.css">
+</head>
+
+<body>
+    <header class="container">
+        <nav>
+            <img id="logo" src="../src/img/petauau.png" alt="logo">
+            <div class="menu">
+                <ul>
+                    <a href="../home/home.html">
+                        <li>Inicio</li>
+                    </a>
+                    <a href="../home/pet.html">
+                        <li>Voltar</li>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="contt">
+        <fieldset>
+            <legend>Cadastrar Historico</legend>
+            <form id="cadastroForm" onsubmit="cadastrar(event)">
+                <div class="sec1">
+                    <label for="petid" >PetID:</label>
+                    <input type="number" id="petid" name="petid" required>
+
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome"required>
+                </div>
+                <div class="sec2">
+                    <label for="historico">Historico:</label>
+                    <textarea name="historico" id="historico" required></textarea>
+                </div>
+                <button id="button" type="submit">Cadastrar</button>
+                </div>
+              
+            </form>
+           
+        </fieldset>
+    </div>
+    
+
+    <script>
+             document.addEventListener('DOMContentLoaded', () => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const petId = urlParams.get('id');
+                if (petId) {
+                    inserirId(petId);
+                }
+            });
+
+        async function inserirId(PetID) {
+            try {
+                const response = await fetch(`http://localhost:3000/pets/${PetID}`);
+                if (!response.ok) {
+                    throw new Error(`Erro ${response.status}: ${response.statusText}`);
+                }
+                const petId = await response.json();
+                console.log('Dados do pet: ',petId);
+                    
+                    // Preenche o formulário com os dados do cliente para edição
+                    document.getElementById('petid').value = petId.PetID || '';
+                    document.getElementById('nome').value = petId.Nome || '';
+                    
+                    
+                    // // Salva o ID do cliente para uso posterior na atualização
+                    // editarForm.dataset.petId = PetID;
+                    // editarForm.style.display = 'block'; // Mostra o formulário
+                    
+            } catch (error) {
+                console.error('Erro ao buscar dados do pet para historico:', error);
+            }
+                    
+        }
+
+        function cadastrar(event) {
+            event.preventDefault(); // Evita o refresh da página
+
+            // Pega os valores do formulário
+            const form = document.getElementById('cadastroForm');
+            const formData = new FormData(form);
+
+            // Converte os dados para um objeto
+            const data = Object.fromEntries(formData.entries());
+            data.petid = parseInt(data.petid, 10); // Converte para inteiro
+
+            // Faz a requisição POST para a API
+            fetch('http://localhost:3000/historico', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Erro no cadastro');
+                }
+            })
+            .then(data => {
+                alert('Cadastro realizado com sucesso!');
+                location.reload();
+                console.log('Sucesso:', data);
+            })
+            .catch(error => {
+                alert('Erro ao cadastrar!');
+                console.error('Erro:', error);
+            });
+        }
+    </script>
+
+    
+</body>
+
+</html>

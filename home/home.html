@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="home.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+    <header class="container">
+        <nav>
+            <a href="home.html"><img id="logo" src="../src/img/petauau.png" alt="logo_pet"></a>
+            <div class="menu">
+                <ul>
+                    <a id="clientes">
+                        <li>Clientes</li>
+                    </a>
+                    <a id="servicos">
+                        <li>Serviços</li>
+                    </a>
+                    <a id="pets">
+                        <li>Pets</li>
+                    </a>
+                    <a id="funcionarios">
+                        <li>Funcionarios</li>
+                    </a>
+
+                    <a id="sair">
+                    <li>
+                        Sair
+                    </li>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="marca">
+        <img src="../src/img/petauau.png" alt="petshopauau">
+    </div>
+    
+    <div class="conteiner"><a href="../Cliente.html"></a></div>
+    
+    <footer>
+        <div>
+            <p>&copy; 2024 PetShopAuAU.</p>
+        </div>
+    </footer>
+    
+    <script>
+        const clt = document.querySelector('#clientes');        
+        clt.addEventListener('click', async function() {
+            window.location.href = "./Cliente.html";
+        
+        });
+
+        const ser = document.querySelector('#servicos');        
+        ser.addEventListener('click', async function() {
+            window.location.href = "./servico.html";
+        
+        });
+
+        const pt = document.querySelector('#pets');
+        pt.addEventListener('click', async function() {
+            window.location.href = "./pet.html";
+
+        });
+
+        const fun = document.querySelector('#funcionarios');
+        fun.addEventListener('click', async function() {
+            window.location.href = "./funcionario.html";
+
+        });
+
+        document.getElementById("sair").addEventListener('click', function() {
+            const confirma = confirm('Você realmente deseja sair?');
+            if (confirma) {
+                window.location.href = '../login/login.html';
+            }
+        }) 
+
+        
+    </script>
+    
+</body>

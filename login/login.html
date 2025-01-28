@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="icon" href="../src/img/petauau.png" type="image/x-icon" >
+    
+</head>
+
+<body>
+    <div class="container">
+        
+        <form>
+           <img src="../src/img/petauau.png" alt="petauau">
+            <div id="error" class="error"></div>
+            <div class="input">
+                <label for="Email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input">
+                <label for="Senha">Senha</label>
+                <input type="password" id="senha" name="senha" required>
+            </div>
+        </form>
+        <button onclick="login()">Entrar</button>
+    </div>
+
+<script>
+    async function login() {
+    const email = document.getElementById('email').value;
+    const senha = document.getElementById('senha').value;
+    const errorDiv = document.getElementById('error');
+    errorDiv.innerText = ''; // Limpa erros anteriores
+
+        try {
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, senha })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Login bem-sucedido');
+                localStorage.setItem('token', data.token);
+                window.location.href = '../home/home.html';
+            } else {
+                errorDiv.innerText = data.erro || 'Erro desconhecido';
+            }
+        } catch (error) {
+            console.error('Erro ao fazer login:', error);
+            errorDiv.innerText = 'Erro ao fazer login';
+        }
+    }
+
+</script>
+</body>
+</html>

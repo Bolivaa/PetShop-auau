@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+}
+
+.container {
+    background-color: #b0e2eb;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+    gap: 30rem;
+   
+
+}
+
+.editar-cont {
+    display: none;
+}
+
+#logo {
+    height: 100px;
+    margin-right: 180px;
+}
+
+.menu ul {
+    display: flex;
+    gap: 35px;
+    margin-right: 35px;
+    margin-top: 9%;
+}
+
+.menu ul a {
+    text-decoration: none;
+    color: black;
+}
+
+.menu ul li {
+    margin-top: 10px;
+    list-style: none;
+    cursor: pointer;
+}
+
+.menu ul li:hover {
+    color: #5a5454;
+}
+
+.marca {
+    display: flex;
+    justify-content: center;
+    opacity: 40%;
+    margin: 100px;
+}
+
+footer {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    padding: 1%;
+    max-width: 100%;
+    background-color: #F5F5DC;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    nav { 
+        flex-direction: column;
+         gap: 1rem;
+     } 
+    #logo {
+         margin-right: 0;
+          margin-bottom: 1rem; 
+        } 
+    .menu ul { 
+        flex-direction: column; 
+        gap: 0.5rem; 
+        margin-right: 0; 
+        margin-top: 0; 
+    } 
+.marca {
+     margin: 50px; 
+    } 
+} 
+@media (max-width: 480px) {
+    nav { 
+        gap: 0.5rem;
+    } 
+    .menu ul { 
+        gap: 0.25rem;
+    } 
+    .marca {
+        margin: 25px;
+    } 
+}
+

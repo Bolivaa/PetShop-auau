@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente</title>
+    <link rel="stylesheet" href="Cliente.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="container">
+        <nav>
+            <a href="home.html"><img id="logo" src="../src/img/petauau.png" alt="logo_pet"></a>
+            <div class="menu">
+                <ul>
+                    <a href="home.html">
+                        <li>Inicio</li>
+                    </a>
+                    <a href="Cliente.html" id="clientes">
+                        <li>Clientes</li>
+                    </a>
+                    <a href="pet.html" id="pets">
+                        <li>Pets</li>
+                    </a>
+                    <a href="funcionario.html">
+                        <li>Funcionarios</li>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="conteiner">
+        <div class="buscar">
+            <button id="cadas">Cadastrar</button>
+        </div>
+
+        <div class="tabela">
+            <table style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                        <th id="id">ID</th>
+                        <th>DESCRIÇÃO</th>
+                        <th>VALOR</th>
+                        <th>OPÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <div>
+            <p>&copy; 2024 PetShopAuAU.</p>
+        </div>
+    </footer>
+
+    <script>
+        function formatarPreco(preco) {
+            return parseFloat(preco).toFixed(2).replace('.', ',');
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                const response = await fetch('http://localhost:3000/servicos');
+                const resultado = await response.json();
+
+                const tabelaBody = document.querySelector('.tabela tbody');
+                tabelaBody.innerHTML = '';
+
+                resultado.forEach(servico => {
+                    const novaLinha = tabelaBody.insertRow();
+                    novaLinha.insertCell(0).textContent = servico.ServicoID;
+                    novaLinha.insertCell(1).textContent = servico.Descricao;
+                    novaLinha.insertCell(2).textContent = formatarPreco(servico.Preco); // Formata o valor
+                    const opcoesCell = novaLinha.insertCell(3);
+
+                    const editarButton = document.createElement('button');
+                    editarButton.classList.add("botaotabela");
+                    editarButton.innerHTML = '<img src="../src/img/edit.png" alt="Editar">';
+                    opcoesCell.appendChild(editarButton);
+                    editarButton.onclick = () => {
+                        window.location.href = `../servico/editarServico.html?id=${servico.ServicoID}`;
+                    };
+
+                    const deletarButton = document.createElement('button');
+                    deletarButton.classList.add("botaotabela");
+                    deletarButton.innerHTML = '<img src="../src/img/delete2.png" alt="Deletar">';
+                    opcoesCell.appendChild(deletarButton);
+                    deletarButton.onclick = () => {
+                        const confirmacao = confirm('Você tem certeza que deseja deletar este serviço?');
+                        if (confirmacao) {
+                            fetch(`http://localhost:3000/servicos/${servico.ServicoID}`, { method: 'DELETE' })
+                                .then(response => {
+                                    if (response.ok) {
+                                        alert('Serviço deletado com sucesso!');
+                                        location.reload();
+                                    } else {
+                                        alert('Erro ao deletar Serviço.');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Erro:', error);
+                                    alert('Erro ao deletar serviço.');
+                                });
+                        }
+                    };
+                });
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+            }
+        });
+
+        document.getElementById("cadas").addEventListener('click', function () {
+            window.location.href = "../servico/cadastrarServico.html";
+        });
+
+    </script>
+</body>
+
+</html>
